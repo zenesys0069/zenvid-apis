@@ -18,7 +18,7 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
         with:
           source: '.'
-          target: '/var/www/shopexe.com'
+          target: '/var/www/shopexe.tk'
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master
@@ -27,4 +27,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: cd /var/www/shopexe.com && npm install
+          script: cd /var/www/shopexe.tk && npm install
