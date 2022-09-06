@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import userRouter from './api/v1/routes/user.routes.js'
 
 // express app
 const app = express()
@@ -14,6 +15,7 @@ app.use(express.json())
 // server static files
 
 // routes
+app.use('/api/v1/user', userRouter)
 
 // root route
 app.get('/', (req, res) => {
