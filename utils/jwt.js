@@ -36,7 +36,7 @@ export const isAuthenticated = (req, res, next) => {
           // this token is expired, ask user to re-login
           res.status(401).json({
             status: false,
-            message: 'This token is expired, please login again',
+            message: 'This token is expired.',
           })
         }
       })
