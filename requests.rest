@@ -10,10 +10,14 @@
 # }
 
 #login
-POST http://localhost:4000/api/v1/user/login
-Content-Type: application/json
+# POST http://localhost:4000/api/v1/user/login
+# Content-Type: application/json
 
-{
-    "email" : "akshaymemail@gmail.com",
-    "password" : "12345"
-}
+# {
+#     "email" : "akshaymemail@gmail.com",
+#     "name" : "AKSHAY KUMAR SINGH",
+#     "password" : "12345"
+# }
+
+GET http://localhost:4000/api/v1/user/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQUtTSEFZIEtVTUFSIFNJTkdIIiwiZW1haWwiOiJha3NoYXltZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNjYyNTM4NDk1LCJleHAiOjE2NjI1NDIwOTV9.86_Wk242wIYDDjOP5AVKKA6ZRb7VA0JaGBQikU9k0UY

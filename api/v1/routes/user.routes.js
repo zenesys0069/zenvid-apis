@@ -1,9 +1,11 @@
 import express from 'express'
-import { login, register } from '../controllers/user.controllers.js'
+import { isAuthenticated } from '../../../utils/jwt.js'
+import * as userControllers from '../controllers/user.controllers.js'
 
 const userRouter = express.Router()
 
-userRouter.post('/register', register)
-userRouter.post('/login', login)
+userRouter.post('/register', userControllers.register)
+userRouter.post('/login', userControllers.login)
+userRouter.get('/profile', isAuthenticated, userControllers.profile)
 
 export default userRouter
