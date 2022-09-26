@@ -1,17 +1,17 @@
 # GET http://localhost:4000
 
 # register
-# POST http://localhost:4000/api/v1/user/register
-# Content-Type: application/json
+POST http://localhost:4000/api/v1/user/register
+Content-Type: application/json
 
-# {
-#     "firstName" : "akshay",
-#     "lastName" : "singh",
-#     "phone" : "8271097843",
-#     "username" :"akshaymemail",
-#     "password" : "123456",
-#     "email" : "akshaymemail@gmail.com"
-# }
+{
+    "firstName" : "akshay",
+    "lastName" : "singh",
+    "phone" : "8271097843",
+    "username" :"akshaymemail",
+    "password" : "123456",
+    "email" : "akshaymemail@gmail.com"
+}
 
 # login
 # POST http://localhost:4000/api/v1/user/login
@@ -22,5 +22,5 @@
 #     "password" : "123456"
 # }
 
-GET http://localhost:4000/api/v1/user/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJha3NoYXkiLCJsYXN0TmFtZSI6InNpbmdoIiwiZW1haWwiOiJha3NoYXltZW1haWxAZ21haWwuY29tIiwidXNlcm5hbWUiOiJha3NoYXltZW1haWwiLCJwaG9uZSI6IjgyNzEwOTc4NDMiLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MjU4MzEwNSwiZXhwIjoxNjYyNTg2NzA1fQ.MrTpnmk89VbO7F0VUvlVjWtEeQXnBq4ef0dlFFJnQXQ
+# GET http://localhost:4000/api/v1/user/profile
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJha3NoYXkiLCJsYXN0TmFtZSI6InNpbmdoIiwiZW1haWwiOiJha3NoYXltZW1haWxAZ21haWwuY29tIiwidXNlcm5hbWUiOiJha3NoYXltZW1haWwiLCJwaG9uZSI6IjgyNzEwOTc4NDMiLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MjU4MzEwNSwiZXhwIjoxNjYyNTg2NzA1fQ.MrTpnmk89VbO7F0VUvlVjWtEeQXnBq4ef0dlFFJnQXQ

@@ -31,6 +31,7 @@ export const register = (req, res) => {
         status: false,
         message:
           'There was an error while create your account, please try again',
+        error,
       })
     }
     // user successfully create in the database
