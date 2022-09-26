@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import schemas from '../schemas/index.js'
 
-const User = mongoose.model('User', schemas.user)
+const Otp = mongoose.model('Otp', schemas.otp)
 
-export default User
+export default Otp
