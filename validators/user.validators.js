@@ -14,6 +14,11 @@ export const login = [
     .withMessage('password should be max 50 characters'),
 ]
 
+export const otp = [
+  body('email').notEmpty().withMessage('email is required!'),
+  body('email').isEmail().withMessage('a valid email is required'),
+]
+
 // validates register endpoint
 export const register = [
   body('firstName').notEmpty().withMessage('firstName is required!'),

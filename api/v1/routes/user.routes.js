@@ -13,6 +13,14 @@ const userRouter = express.Router()
  * powered by, express-validators
  */
 
+// get otp
+userRouter.post(
+  '/get_otp',
+  validators.user.otp,
+  validators.isRequestValidated,
+  userControllers.otp
+)
+
 // register the user
 userRouter.post(
   '/register',

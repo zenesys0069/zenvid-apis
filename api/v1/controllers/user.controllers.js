@@ -1,6 +1,71 @@
 import models from '../../../mongodb/models/index.js'
 import { generateToken } from '../../../utils/jwt.js'
 import bcrypt from 'bcrypt'
+import Otp from '../../../mongodb/models/otp.model.js'
+import helpers from '../../../helpers/index.js'
+
+export const otp = (req, res) => {
+  // get email from payload
+  const { email } = req.body
+
+  // check if email is already exist
+  Otp.findOne({ email }, (err, foundDoc) => {
+    // there was an error while finding the doc
+    if (err) {
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error',
+        error: err,
+      })
+    }
+    if (foundDoc) {
+      // email found update the otp
+      Otp.updateOne(
+        { email },
+        {
+          otp: helpers.user.generateOtp(),
+        },
+        (err, docs) => {
+          if (err) {
+            // error while updating otp
+            return res.status(400).json({
+              status: false,
+              message: 'Unable to send otp',
+              error: err,
+            })
+          }
+          // otp updated successfully
+          return res.status(200).json({
+            status: true,
+            message: 'OTP updated successfully',
+          })
+        }
+      )
+    } else {
+      // email not found create new entry with new otp
+      new Otp({
+        email: email,
+        otp: helpers.user.generateOtp(),
+      })
+        .save()
+        .then((docs) => {
+          // otp generated successfully
+          res.status(200).json({
+            status: true,
+            message: 'OTP sent successfully',
+          })
+        })
+        .catch((err) => {
+          // unable to generate otp
+          res.status(400).json({
+            status: false,
+            message: 'Unable to generate otp',
+            error: err,
+          })
+        })
+    }
+  })
+}
 
 export const register = (req, res) => {
   // destructure all payloads from req.body

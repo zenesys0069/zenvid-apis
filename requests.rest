@@ -1,17 +1,25 @@
 # GET http://localhost:4000
 
-# register
-POST http://localhost:4000/api/v1/user/register
+# get otp
+POST http://localhost:4000/api/v1/user/get_otp
 Content-Type: application/json
 
 {
-    "firstName" : "akshay",
-    "lastName" : "singh",
-    "phone" : "8271097843",
-    "username" :"akshaymemail",
-    "password" : "123456",
     "email" : "akshaymemail@gmail.com"
 }
+
+# register
+# POST http://localhost:4000/api/v1/user/register
+# Content-Type: application/json
+
+# {
+#     "firstName" : "akshay",
+#     "lastName" : "singh",
+#     "phone" : "8271097843",
+#     "username" :"akshaymemail",
+#     "password" : "123456",
+#     "email" : "akshaymemail@gmail.com"
+# }
 
 # login
 # POST http://localhost:4000/api/v1/user/login
