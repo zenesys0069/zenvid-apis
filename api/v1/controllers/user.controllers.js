@@ -3,6 +3,7 @@ import { generateToken } from '../../../utils/jwt.js'
 import bcrypt from 'bcrypt'
 import Otp from '../../../mongodb/models/otp.model.js'
 import helpers from '../../../helpers/index.js'
+import moment from 'moment'
 
 export const otp = (req, res) => {
   // get email from payload
@@ -25,7 +26,7 @@ export const otp = (req, res) => {
         { email },
         {
           otp: otp,
-          expireAt: new Date(),
+          expireAt: moment(new Date()).add(5, 'm').toDate(),
         },
         (err, docs) => {
           if (err) {
