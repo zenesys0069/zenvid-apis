@@ -24,6 +24,7 @@ export const otp = (req, res) => {
         { email },
         {
           otp: helpers.user.generateOtp(),
+          expireAt: new Date(),
         },
         (err, docs) => {
           if (err) {

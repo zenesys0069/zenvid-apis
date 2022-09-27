@@ -2,23 +2,19 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const otpSchema = new Schema(
-  {
-    email: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: true,
-    },
-    otp: {
-      type: Number,
-      trim: true,
-      required: true,
-    },
+const otpSchema = new Schema({
+  email: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-)
+  otp: {
+    type: Number,
+    trim: true,
+    required: true,
+  },
+  expireAt: { type: Date, expires: 6000 * 10, default: new Date() },
+})
 
 export default otpSchema
