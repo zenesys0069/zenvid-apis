@@ -14,7 +14,16 @@ const otpSchema = new Schema({
     trim: true,
     required: true,
   },
-  expireAt: { type: Date, expires: '10m', default: new Date() },
+  expireAt: { type: Date, default: new Date() },
 })
+
+otpSchema.index(
+  {
+    expireAt: 1,
+  },
+  {
+    expireAfterSeconds: 60, // expires at 60 seconds
+  }
+)
 
 export default otpSchema
