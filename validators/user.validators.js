@@ -18,6 +18,14 @@ export const otp = [
   body('email').notEmpty().withMessage('email is required!'),
   body('email').isEmail().withMessage('a valid email is required'),
 ]
+export const verifyOtp = [
+  body('email').notEmpty().withMessage('Email is required!'),
+  body('email').isEmail().withMessage('A valid email is required'),
+  body('otp').notEmpty().withMessage('One time password is required!'),
+  body('otp')
+    .isLength({ min: 6, max: 6 })
+    .withMessage('A valid otp is required'),
+]
 
 // validates register endpoint
 export const register = [

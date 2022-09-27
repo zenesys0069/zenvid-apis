@@ -21,6 +21,13 @@ userRouter.post(
   userControllers.otp
 )
 
+userRouter.post(
+  '/verify_otp',
+  validators.user.verifyOtp,
+  validators.isRequestValidated,
+  userControllers.verifyOtp
+)
+
 // register the user
 userRouter.post(
   '/register',

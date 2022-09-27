@@ -7,6 +7,7 @@ import helpers from '../../../helpers/index.js'
 export const otp = (req, res) => {
   // get email from payload
   const { email } = req.body
+  const otp = helpers.user.generateOtp()
 
   // check if email is already exist
   Otp.findOne({ email }, (err, foundDoc) => {
@@ -23,7 +24,7 @@ export const otp = (req, res) => {
       Otp.updateOne(
         { email },
         {
-          otp: helpers.user.generateOtp(),
+          otp: otp,
           expireAt: new Date(),
         },
         (err, docs) => {
@@ -36,13 +37,8 @@ export const otp = (req, res) => {
             })
           }
           // otp updated successfully
-
           helpers.mail
-            .sendOneTimePassword(
-              email,
-              'One Time Password',
-              helpers.user.generateOtp()
-            )
+            .sendOneTimePassword(email, 'One Time Password', otp)
             .then((mailRes) => {
               return res.status(200).json({
                 status: true,
@@ -63,17 +59,13 @@ export const otp = (req, res) => {
       // email not found create new entry with new otp
       new Otp({
         email: email,
-        otp: helpers.user.generateOtp(),
+        otp: otp,
       })
         .save()
         .then((_) => {
           // otp generated successfully
           helpers.mail
-            .sendOneTimePassword(
-              email,
-              'One Time Password',
-              helpers.user.generateOtp()
-            )
+            .sendOneTimePassword(email, 'One Time Password', otp)
             .then((mailRes) => {
               return res.status(200).json({
                 status: true,
@@ -97,6 +89,44 @@ export const otp = (req, res) => {
             error: err,
           })
         })
+    }
+  })
+}
+
+// verify otp
+export const verifyOtp = (req, res) => {
+  //get email and otp from payload
+  const { otp, email } = req.body
+
+  //retrieve otp against email provided
+  Otp.findOne({ email }, (err, docs) => {
+    if (err) {
+      // an error occur while fetching data
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error, please try again',
+      })
+    }
+    if (docs) {
+      // an otp with this email is associated, now verify if both otp matches
+      if (docs.otp == otp) {
+        // one time password matched
+        res.status(200).json({
+          status: true,
+          message: 'One time password has been verified!',
+        })
+      } else {
+        // incorrect one time password
+        res
+          .status(400)
+          .json({ status: false, message: 'Incorrect one time password' })
+      }
+    } else {
+      // there is no record found or one time password has been expired.
+      res.status(400).json({
+        status: false,
+        message: 'One time password has been expired!',
+      })
     }
   })
 }
