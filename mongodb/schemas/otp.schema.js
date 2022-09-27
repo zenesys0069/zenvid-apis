@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import moment from 'moment'
 
 const { Schema } = mongoose
 
@@ -14,15 +15,14 @@ const otpSchema = new Schema({
     trim: true,
     required: true,
   },
-  expireAt: { type: Date, default: new Date() },
+  expireAt: { type: Date, default: moment(new Date()).add(5, 'm').toDate() },
 })
-
 otpSchema.index(
   {
     expireAt: 1,
   },
   {
-    expireAfterSeconds: 60, // expires at 60 seconds
+    expireAfterSeconds: 60 * 5, // expires at 300 seconds
   }
 )
 
