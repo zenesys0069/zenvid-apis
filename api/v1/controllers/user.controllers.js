@@ -37,7 +37,7 @@ export const otp = (req, res) => {
           // otp updated successfully
           return res.status(200).json({
             status: true,
-            message: 'OTP updated successfully',
+            message: 'OTP resend successfully',
           })
         }
       )
