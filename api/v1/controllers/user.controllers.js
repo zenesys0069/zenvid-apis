@@ -35,10 +35,27 @@ export const otp = (req, res) => {
             })
           }
           // otp updated successfully
-          return res.status(200).json({
-            status: true,
-            message: 'OTP resend successfully',
-          })
+
+          helpers.mail
+            .sendOneTimePassword(
+              email,
+              'One Time Password',
+              helpers.user.generateOtp()
+            )
+            .then((mailRes) => {
+              return res.status(200).json({
+                status: true,
+                message: 'OTP resend successfully',
+                result: mailRes,
+              })
+            })
+            .catch((mailError) => {
+              return res.status(400).json({
+                status: false,
+                message: 'Unable to send otp',
+                error: mailError,
+              })
+            })
         }
       )
     } else {
@@ -48,12 +65,28 @@ export const otp = (req, res) => {
         otp: helpers.user.generateOtp(),
       })
         .save()
-        .then((docs) => {
+        .then((_) => {
           // otp generated successfully
-          res.status(200).json({
-            status: true,
-            message: 'OTP sent successfully',
-          })
+          helpers.mail
+            .sendOneTimePassword(
+              email,
+              'One Time Password',
+              helpers.user.generateOtp()
+            )
+            .then((mailRes) => {
+              return res.status(200).json({
+                status: true,
+                message: 'OTP sent successfully',
+                result: mailRes,
+              })
+            })
+            .catch((mailError) => {
+              return res.status(400).json({
+                status: false,
+                message: 'Unable to send otp',
+                error: mailError,
+              })
+            })
         })
         .catch((err) => {
           // unable to generate otp
