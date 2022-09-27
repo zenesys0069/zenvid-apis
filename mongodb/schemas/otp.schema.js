@@ -22,7 +22,7 @@ otpSchema.index(
     expireAt: 1,
   },
   {
-    expireAfterSeconds: 60 * 5, // expires at 300 seconds
+    expireAfterSeconds: 0,
   }
 )
 
