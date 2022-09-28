@@ -200,6 +200,7 @@ export const login = (req, res) => {
         })
       // generate token
       const payload = {
+        id: foundUser._id,
         firstName: foundUser.firstName,
         lastName: foundUser.lastName,
         email: foundUser.email,

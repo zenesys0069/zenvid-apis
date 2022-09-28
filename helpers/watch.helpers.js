@@ -6,10 +6,10 @@ import { dirname } from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const uploadPath = path.join(__dirname, '../watch/') // Register the upload path
-fs.ensureDir(uploadPath) // Make sure that he upload path exits
-
 export const upload = (req, res, next) => {
+  console.log(req.user)
+  const uploadPath = path.join(__dirname, `../watch/${req.user.username}/`) // Register the upload path
+  fs.ensureDir(uploadPath) // Make sure that he upload path exits
   req.pipe(req.busboy) // Pipe it trough busboy
   req.busboy.on('file', (fieldname, file, filename) => {
     // Create a write stream of the new file

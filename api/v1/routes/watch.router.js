@@ -25,6 +25,11 @@ watchRouter.get('/', (req, res) => {
   return res.end()
 })
 
-watchRouter.post('/upload', helpers.watch.upload, watchControllers.upload)
+watchRouter.post(
+  '/upload',
+  isAuthenticated,
+  helpers.watch.upload,
+  watchControllers.upload
+)
 
 export default watchRouter
