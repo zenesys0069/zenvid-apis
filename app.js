@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routers/index.js'
 import mongodbInit from './configs/mongodb.js'
+import Busboy from './middlewares/busboy.js'
 
 // express app
 const app = express()
@@ -13,6 +14,11 @@ const API_PREFIX = '/api/v1'
 // middleware
 app.use(cors())
 app.use(express.json())
+app.use(
+  Busboy({
+    highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
+  })
+) // Insert the busboy middle-ware
 
 // server static files
 // TODO

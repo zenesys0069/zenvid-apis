@@ -1,4 +1,5 @@
 import express from 'express'
+import helpers from '../../../helpers/index.js'
 import { isAuthenticated } from '../../../utils/jwt.js'
 import validators from '../../../validators/index.js'
 import * as watchControllers from '../controllers/watch.controllers.js'
@@ -13,6 +14,17 @@ const watchRouter = express.Router()
  * powered by, express-validators
  */
 
-videoRouter.post('/upload', watchControllers.upload)
+watchRouter.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' })
+  res.write(
+    '<form action="/api/v1/watch/upload" method="post" enctype="multipart/form-data">'
+  )
+  res.write('<input type="file" name="fileToUpload"><br>')
+  res.write('<input type="submit">')
+  res.write('</form>')
+  return res.end()
+})
+
+watchRouter.post('/upload', helpers.watch.upload, watchControllers.upload)
 
 export default watchRouter
