@@ -19,4 +19,11 @@ exploreRouter.post(
   exploreControllers.username
 )
 
+exploreRouter.post(
+  '/find_user',
+  validators.explore.findUser,
+  validators.isRequestValidated,
+  exploreControllers.findUser
+)
+
 export default exploreRouter

@@ -48,4 +48,12 @@ const userSchema = new Schema({
   },
 })
 
+userSchema.index({
+  firstName: 'text',
+  lastName: 'text',
+  email: 'text',
+  username: 'text',
+  phone: 'text',
+})
+
 export default userSchema

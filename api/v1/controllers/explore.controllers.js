@@ -26,3 +26,20 @@ export const username = (req, res) => {
     }
   })
 }
+
+// find users by username, email, name
+export const findUser = (req, res) => {
+  // get search from payload
+  const { search } = req.body
+  models.User.find({ $text: { $search: search } }).exec((err, docs) => {
+    if (err)
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error, please try again',
+      })
+    res.status(200).json({
+      status: true,
+      data: docs,
+    })
+  })
+}
