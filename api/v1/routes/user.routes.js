@@ -1,4 +1,5 @@
 import express from 'express'
+import middleware from '../../../middlewares/index.js'
 import { isAuthenticated } from '../../../utils/jwt.js'
 import validators from '../../../validators/index.js'
 import * as userControllers from '../controllers/user.controllers.js'
@@ -33,6 +34,7 @@ userRouter.post(
   '/register',
   validators.user.register,
   validators.isRequestValidated,
+  middleware.user.uploadImage,
   userControllers.register
 )
 

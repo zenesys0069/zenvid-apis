@@ -134,16 +134,19 @@ export const verifyOtp = (req, res) => {
 
 export const register = (req, res) => {
   // destructure all payloads from req.body
-  const {
-    firstName,
-    lastName,
-    phone,
-    email,
-    username,
-    password,
-    role,
-    picture,
-  } = req.body
+  const { firstName, lastName, phone, email, username, password, role } =
+    req.body
+
+  let picture
+  // check image provide on signup or not
+  const { picture: Picture } = res.locals
+
+  if (Picture.status) {
+    // image was provide and uploaded
+    // now we can access path and store it in db
+    picture = Picture.path
+  }
+
   // create new user in the database
   new models.User({
     firstName,
@@ -153,7 +156,7 @@ export const register = (req, res) => {
     username,
     cipher: bcrypt.hashSync(password, 10),
     role,
-    picture,
+    picture: picture,
   }).save((error, result) => {
     // check if there is any error while create user in the database
     if (error) {
