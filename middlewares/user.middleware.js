@@ -55,7 +55,7 @@ export const uploadImage = async (req, res, next) => {
   } catch (e) {
     res.status(400).json({
       status: false,
-      message: 'Please provide a basic image base',
+      message: 'Please provide a valid image base',
     })
   }
 }
