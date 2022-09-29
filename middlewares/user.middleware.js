@@ -49,7 +49,7 @@ export const uploadImage = async (req, res, next) => {
     res.locals.picture = {
       status: true,
       message: 'profile uploaded successfully',
-      path: '/avatars/' + fileName,
+      path: fileName,
     }
     next()
   } catch (e) {

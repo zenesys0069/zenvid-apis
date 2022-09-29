@@ -217,7 +217,6 @@ export const login = (req, res) => {
         res.status(200).json({
           status: true,
           token,
-          ...payload,
         })
       } else {
         // there was an error while generating token
@@ -232,5 +231,44 @@ export const login = (req, res) => {
 }
 
 export const profile = (req, res) => {
-  res.status(200).json(req.user)
+  // user token verified
+  // can be access req.user
+  // find user details in db
+
+  models.User.findById(req.user.id, (err, docs) => {
+    if (err)
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error, please try again',
+        error: err,
+      })
+
+    if (!docs) {
+      // user not found
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error, please try again',
+        result: docs,
+      })
+    }
+    const user = {
+      id: docs._id,
+      firstName: docs.firstName,
+      lastName: docs.lastName,
+      fullName: docs.firstName + docs.lastName,
+      email: docs.email,
+      username: docs.username,
+      phone: docs.phone,
+      role: docs.role,
+      picture: docs.picture
+        ? helpers.user.getFullPath(req, docs.picture)
+        : null,
+    }
+
+    res.status(200).json({
+      status: true,
+      message: 'Request completed successfully',
+      result: user,
+    })
+  })
 }
