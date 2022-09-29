@@ -3,13 +3,10 @@ import cors from 'cors'
 import routes from './routers/index.js'
 import mongodbInit from './configs/mongodb.js'
 import Busboy from './middlewares/busboy.js'
+import * as constants from './constants/index.js'
 
 // express app
 const app = express()
-
-// port
-const PORT = process.env.PORT || 4000
-const API_PREFIX = '/api/v1'
 
 // middleware
 app.use(cors())
@@ -21,11 +18,12 @@ app.use(
 ) // Insert the busboy middle-ware
 
 // server static files
-// TODO
+app.use(constants.STATIC_AVATAR, express.static('avatars')) // serve profile pic
+app.use(constants.STATIC_WATCH, express.static('watch')) // serve reels/videos
 
 // routes
 Object.entries(routes).map(([name, router]) => {
-  app.use(`${API_PREFIX}/${name}`, router)
+  app.use(`${constants.API_PREFIX}/${name}`, router)
 })
 
 // connecting app to mongodb database
@@ -46,6 +44,6 @@ app.get('/', (req, res) => {
 })
 
 // spinning the server
-app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}`)
+app.listen(constants.PORT, () => {
+  console.log(`Server is running at port ${constants.PORT}`)
 })
