@@ -1,4 +1,4 @@
-import models from '../../../mongodb/models/index.js'
+import models from '../../../mongodb/models/index.mjs'
 
 export const username = (req, res) => {
   // get username from request payload

@@ -1,6 +1,6 @@
 import express from 'express'
-import validators from '../../../validators/index.js'
-import * as exploreControllers from '../controllers/explore.controllers.js'
+import validators from '../../../validators/index.mjs'
+import * as exploreControllers from '../controllers/explore.controllers.mjs'
 
 // user routes reference
 const exploreRouter = express.Router()

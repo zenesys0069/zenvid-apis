@@ -1,4 +1,4 @@
-import transporter from '../configs/nodemailer.js'
+import transporter from '../configs/nodemailer.mjs'
 
 export const sendOneTimePassword = (address, subject, otp) => {
   return new Promise((resolve, reject) => {

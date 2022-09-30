@@ -1,5 +1,5 @@
-import otpSchema from './otp.schema.js'
-import userSchema from './user.schema.js'
+import otpSchema from './otp.schema.mjs'
+import userSchema from './user.schema.mjs'
 
 // merges all schemas and exported as default
 const schemas = {

@@ -1,8 +1,8 @@
-import models from '../../../mongodb/models/index.js'
-import { generateToken } from '../../../utils/jwt.js'
+import models from '../../../mongodb/models/index.mjs'
+import { generateToken } from '../../../utils/jwt.mjs'
 import bcrypt from 'bcrypt'
-import Otp from '../../../mongodb/models/otp.model.js'
-import helpers from '../../../helpers/index.js'
+import Otp from '../../../mongodb/models/otp.model.mjs'
+import helpers from '../../../helpers/index.mjs'
 import moment from 'moment'
 
 export const otp = (req, res) => {

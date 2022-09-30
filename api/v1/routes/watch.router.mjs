@@ -1,8 +1,8 @@
 import express from 'express'
-import helpers from '../../../helpers/index.js'
-import { isAuthenticated } from '../../../utils/jwt.js'
-import validators from '../../../validators/index.js'
-import * as watchControllers from '../controllers/watch.controllers.js'
+import helpers from '../../../helpers/index.mjs'
+import { isAuthenticated } from '../../../utils/jwt.mjs'
+import validators from '../../../validators/index.mjs'
+import * as watchControllers from '../controllers/watch.controllers.mjs'
 
 // user routes reference
 const watchRouter = express.Router()

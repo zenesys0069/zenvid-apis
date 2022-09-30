@@ -1,8 +1,8 @@
 import express from 'express'
-import middleware from '../../../middlewares/index.js'
-import { isAuthenticated } from '../../../utils/jwt.js'
-import validators from '../../../validators/index.js'
-import * as userControllers from '../controllers/user.controllers.js'
+import middleware from '../../../middlewares/index.mjs'
+import { isAuthenticated } from '../../../utils/jwt.mjs'
+import validators from '../../../validators/index.mjs'
+import * as userControllers from '../controllers/user.controllers.mjs'
 
 // user routes reference
 const userRouter = express.Router()
