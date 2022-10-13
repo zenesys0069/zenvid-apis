@@ -1,26 +1,18 @@
 {
-  "name": "shopexe",
+  "name": "zenvid",
   "version": "1.0.0",
-  "description": "an e-commerce shop backend",
+  "description": "zenvid backend",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod": "node app.mjs",
     "dev": "nodemon app.mjs"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/akshaymemail/shopexe.git"
-  },
   "keywords": [
-    "ecommerce"
+    "zenvid"
   ],
   "author": "AKSHAY KUMAR SINGH",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/akshaymemail/shopexe/issues"
-  },
-  "homepage": "https://github.com/akshaymemail/shopexe#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "busboy": "^1.6.0",
