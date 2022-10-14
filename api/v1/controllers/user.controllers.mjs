@@ -255,14 +255,12 @@ export const profile = (req, res) => {
       id: docs._id,
       firstName: docs.firstName,
       lastName: docs.lastName,
-      fullName: docs.firstName + docs.lastName,
+      fullName: `${docs.firstName} ${docs.lastName}`,
       email: docs.email,
       username: docs.username,
       phone: docs.phone,
       role: docs.role,
-      picture: docs.picture
-        ? helpers.user.getFullPath(req, docs.picture)
-        : null,
+      picture: helpers.user.getFullPath(req, docs.picture),
     }
 
     res.status(200).json({

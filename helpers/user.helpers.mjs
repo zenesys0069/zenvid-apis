@@ -6,7 +6,7 @@ export const generateOtp = () => {
 export const getFullPath = (req, path) => {
   const protocol = req.protocol
   const host = req.get('host')
-
+  if (!path) return null
   const fullPath = `${protocol}://${host}${constants.STATIC_AVATAR}/${path}`
   return fullPath
 }

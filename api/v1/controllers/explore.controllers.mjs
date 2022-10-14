@@ -1,3 +1,4 @@
+import helpers from '../../../helpers/index.mjs'
 import models from '../../../mongodb/models/index.mjs'
 
 export const username = (req, res) => {
@@ -37,9 +38,28 @@ export const findUser = (req, res) => {
         status: false,
         message: 'There was an error, please try again',
       })
+    const users = []
+
+    try {
+      docs.map((user) => {
+        users.push({
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          fullName: `${user.firstName} ${user.lastName}`,
+          email: user.email,
+          username: user.username,
+          phone: user.phone,
+          role: user.role,
+          picture: helpers.user.getFullPath(req, user.picture),
+        })
+      })
+    } catch (error) {
+      console.log(err)
+    }
     res.status(200).json({
       status: true,
-      data: docs,
+      data: users,
     })
   })
 }
