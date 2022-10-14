@@ -48,4 +48,12 @@ userRouter.post(
 // get user profile information
 userRouter.get('/profile', isAuthenticated, userControllers.profile)
 
+// reset password
+userRouter.get(
+  '/reset_password/:email',
+  validators.user.resetPassword,
+  validators.isRequestValidated,
+  userControllers.resetPassword
+)
+
 export default userRouter

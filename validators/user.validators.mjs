@@ -1,4 +1,4 @@
-import { body } from 'express-validator'
+import { body, param } from 'express-validator'
 
 // validates login endpoint
 export const login = [
@@ -63,4 +63,9 @@ export const register = [
   body('password')
     .isLength({ max: 50 })
     .withMessage('password should be max 50 digits'),
+]
+
+export const resetPassword = [
+  param('email').notEmpty().withMessage('Email is required!'),
+  param('email').isEmail().withMessage('A valid email is required'),
 ]

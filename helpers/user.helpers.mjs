@@ -10,3 +10,10 @@ export const getFullPath = (req, path) => {
   const fullPath = `${protocol}://${host}${constants.STATIC_AVATAR}/${path}`
   return fullPath
 }
+
+export const getHostUrl = (req) => {
+  const protocol = req.protocol
+  const host = req.get('host')
+  const fullHost = `${protocol}://${host}`
+  return fullHost
+}

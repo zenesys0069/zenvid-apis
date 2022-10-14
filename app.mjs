@@ -43,6 +43,11 @@ app.get('/', (req, res) => {
   })
 })
 
+// reset password
+app.get('/user/reset-password', (req, res) => {
+  res.status(200).json({ message: 'You will reset you password here' })
+})
+
 // spinning the server
 app.listen(constants.PORT, () => {
   console.log(`Server is running at port ${constants.PORT}`)

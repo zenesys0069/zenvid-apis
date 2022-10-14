@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import Otp from '../../../mongodb/models/otp.model.mjs'
 import helpers from '../../../helpers/index.mjs'
 import moment from 'moment'
+import JWT from 'jsonwebtoken'
 
 export const otp = (req, res) => {
   // get email from payload
@@ -268,5 +269,52 @@ export const profile = (req, res) => {
       message: 'Request completed successfully',
       result: user,
     })
+  })
+}
+
+// reset password controller
+export const resetPassword = (req, res) => {
+  const { email } = req.params
+  models.User.findOne({ email: email }, (err, foundUser) => {
+    if (err)
+      return res.status(400).json({
+        status: false,
+        message: 'There was an error, please try again',
+      })
+    if (!foundUser) {
+      return res.status(200).json({
+        status: true,
+        message:
+          'If you are registered with us an email address will be sent to you.',
+      })
+    }
+
+    const host = helpers.user.getHostUrl(req)
+    const payload = {
+      id: foundUser._id,
+      email: foundUser.email,
+    }
+    const resetToken = JWT.sign(payload, process.env.JWT_SECRET_KEY, {
+      expiresIn: '5m',
+    })
+    const resetLink = `${host}/user/reset-password?token=${resetToken}`
+
+    helpers.mail
+      .sendResetPassword(email, resetLink)
+      .then((emailRes) => {
+        res.status(200).json({
+          status: true,
+          message:
+            'If you are registered with us an email address will be sent to you.',
+          result: emailRes,
+        })
+      })
+      .catch((emailErr) => {
+        res.status(200).json({
+          status: false,
+          message: 'There was an error please try again.',
+          result: emailErr,
+        })
+      })
   })
 }
