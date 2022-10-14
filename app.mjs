@@ -4,6 +4,7 @@ import routes from './routers/index.mjs'
 import mongodbInit from './configs/mongodb.mjs'
 import Busboy from './middlewares/busboy.mjs'
 import * as constants from './constants/index.mjs'
+import JWT from 'jsonwebtoken'
 
 // express app
 const app = express()
@@ -17,7 +18,11 @@ app.use(
   })
 ) // Insert the busboy middle-ware
 
+// ejs
+app.set('view engine', 'ejs')
+
 // server static files
+app.use(express.static('public'))
 app.use(constants.STATIC_AVATAR, express.static('avatars')) // serve profile pic
 app.use(constants.STATIC_WATCH, express.static('watch')) // serve reels/videos
 
@@ -45,7 +50,11 @@ app.get('/', (req, res) => {
 
 // reset password
 app.get('/user/reset-password', (req, res) => {
-  res.status(200).json({ message: 'You will reset you password here' })
+  const { token } = req.query
+  JWT.verify(token, process.env.JWT_SECRET_KEY, (error, decoded) => {
+    if (error) return res.status(401).render('expired')
+    res.status(200).render('reset')
+  })
 })
 
 // spinning the server
