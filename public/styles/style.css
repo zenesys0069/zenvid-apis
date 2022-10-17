@@ -3,6 +3,7 @@
 .horizontal-container {
   margin: 0 auto;
   width: 100%;
+  height: 800px;
   /* Create circle */
   /* Create line */
   /* Custom progress bar */
@@ -10,6 +11,7 @@
 @media (min-width: 768px) {
   .horizontal-container {
     width: 500px;
+    height: 800px;
   }
 }
 .horizontal-container .progress-bar-container {
@@ -81,7 +83,7 @@
 .horizontal-container .horizontal-form-box {
   background-color: #fff;
   border: 1px solid #e5e5e5;
-  height: 466px;
+  min-height: 466px;
   padding: 30px;
 }
 .horizontal-container .horizontal-form-box .horizontal-info-container img {
@@ -95,7 +97,6 @@
   text-transform: capitalize;
 }
 .horizontal-container .horizontal-form-box .horizontal-info-container .horizontal-subtitle {
-  letter-spacing: 1px;
   margin-bottom: 20px;
   text-align: left;
 }

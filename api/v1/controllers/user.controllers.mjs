@@ -297,7 +297,7 @@ export const resetPassword = (req, res) => {
     const resetToken = JWT.sign(payload, process.env.JWT_SECRET_KEY, {
       expiresIn: '5m',
     })
-    const resetLink = `${host}/user/reset-password?token=${resetToken}`
+    const resetLink = `${host}/user/password/reset?token=${resetToken}`
 
     helpers.mail
       .sendResetPassword(email, resetLink)

@@ -13,22 +13,37 @@
         <div class="col-sm-12">
           <div class="horizontal-container">
             <div class="horizontal-form-box">
-              <div class="horizontal-info-container text-center">
-                <img
-                  src="https://static.stayjapan.com/assets/top/icon/values-7dd5c8966d7a6bf57dc4bcd11b2156e82a4fd0da94a26aecb560b6949efad2be.svg"
-                />
-                <p class="horizontal-heading">Reset your password</p>
+              <div class="horizontal-info-container">
+                <div class="text-center">
+                  <img
+                    src="https://static.stayjapan.com/assets/top/icon/values-7dd5c8966d7a6bf57dc4bcd11b2156e82a4fd0da94a26aecb560b6949efad2be.svg"
+                  />
+                  <p class="horizontal-heading">Reset your password</p>
+                </div>
                 <p class="horizontal-subtitle">
-                  Your password needs to be at least 8 characters.
+                  <li>At least 1 Uppercase</li>
+                  <li>At least 1 Lowercase</li>
+                  <li>At least 1 Number</li>
+                  <li>At least 1 Symbol</li>
+                  <li>Symbols : !@#$%^&*_=+-</li>
+                  <li>Min 8 chars and Max 12 chars</li>
                 </p>
               </div>
-              <form class="horizontal-form">
+              <form
+                class="horizontal-form"
+                method="post"
+                action="/user/password/reset"
+                enctype="application/x-www-form-urlencoded"
+              >
                 <div class="o3-form-group">
                   <label for="new_password">New password</label>
                   <input
                     type="password"
                     class="o3-form-control o3-input-lg"
+                    name="password"
                     id="new_password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                    required
                   />
                 </div>
                 <div class="o3-form-group">
@@ -37,7 +52,11 @@
                     type="password"
                     class="o3-form-control o3-input-lg"
                     id="confirm_password"
+                    name="confirm_password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                    required
                   />
+                  <input type="text" id="token" name="token" hidden />
                 </div>
                 <button class="o3-btn o3-btn-primary o3-btn-block">
                   Set new password
@@ -48,5 +67,13 @@
         </div>
       </div>
     </div>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const token = params.get('token')
+      // get input element
+      console.log(token)
+      const inputElement = document.getElementById('token')
+      inputElement.value = token
+    </script>
   </body>
 </html>

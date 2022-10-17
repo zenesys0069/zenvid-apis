@@ -7,8 +7,11 @@
   margin: 0 auto;
   width: 100%;
 
+  height: 800px;
+
   @media (min-width: 768px) {
     width: 500px;
+    height: 800px;
   }
 
   //
@@ -112,7 +115,7 @@
   .horizontal-form-box {
     background-color: #fff;
     border: 1px solid #e5e5e5;
-    height: 466px;
+    min-height: 466px;
     padding: 30px;
 
     .horizontal-info-container {
@@ -129,7 +132,6 @@
       }
 
       .horizontal-subtitle {
-        letter-spacing: 1px;
         margin-bottom: 20px;
         text-align: left;
       }
