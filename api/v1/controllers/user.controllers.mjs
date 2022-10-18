@@ -271,7 +271,7 @@ export const profile = (req, res) => {
   })
 }
 
-export const updateProfile = (req, res) => {
+export const updateProfileDetails = (req, res) => {
   // destructure all payloads from req.body
   const { firstName, lastName, phone } = req.body
 
@@ -305,6 +305,35 @@ export const updateProfile = (req, res) => {
         })
       }
       // user successfully create in the database
+      res.status(200).json({
+        status: true,
+        message: 'Your account has been successfully updated!',
+        result: {},
+      })
+    }
+  )
+}
+
+export const updatePicture = (req, res) => {
+  // get picture path from middleware
+  const { picture } = res.locals
+  // update user picture
+  models.User.findOneAndUpdate(
+    { email: req.user.email },
+    {
+      picture: picture.path,
+    },
+    (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          status: false,
+          message:
+            'There was an error while create your account, please try again',
+          error,
+        })
+      }
+      // user successfully create in the database
+      console.log(result)
       res.status(200).json({
         status: true,
         message: 'Your account has been successfully updated!',

@@ -48,12 +48,20 @@ userRouter.post(
 // get user profile information
 userRouter.get('/profile', isAuthenticated, userControllers.profile)
 userRouter.put(
-  '/profile/update',
+  '/profile/update/details',
   isAuthenticated,
-  validators.user.updateProfile,
+  validators.user.updateProfileDetails,
   validators.isRequestValidated,
   middleware.user.uploadImage,
-  userControllers.updateProfile
+  userControllers.updateProfileDetails
+)
+userRouter.patch(
+  '/profile/update/picture',
+  isAuthenticated,
+  validators.user.updatePicture,
+  validators.isRequestValidated,
+  middleware.user.uploadImage,
+  userControllers.updatePicture
 )
 
 // reset password

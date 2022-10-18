@@ -66,7 +66,7 @@ export const register = [
 ]
 
 // validates profile Update
-export const updateProfile = [
+export const updateProfileDetails = [
   body('firstName').notEmpty().withMessage('firstName is required!'),
   body('firstName')
     .isLength({ min: 3 })
@@ -82,6 +82,9 @@ export const updateProfile = [
   body('lastName')
     .isLength({ max: 20 })
     .withMessage('lastName should be max 20 characters'),
+]
+export const updatePicture = [
+  body('picture').notEmpty().withMessage('Picture is required!'),
 ]
 
 export const resetPassword = [
