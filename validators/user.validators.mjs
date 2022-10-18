@@ -61,8 +61,27 @@ export const register = [
     .isLength({ min: 6 })
     .withMessage('password should be atleast 6  digits'),
   body('password')
-    .isLength({ max: 50 })
+    .isLength({ max: 20 })
     .withMessage('password should be max 50 digits'),
+]
+
+// validates profile Update
+export const updateProfile = [
+  body('firstName').notEmpty().withMessage('firstName is required!'),
+  body('firstName')
+    .isLength({ min: 3 })
+    .withMessage('firstName should be atleast 3 characters'),
+  body('firstName')
+    .isLength({ max: 20 })
+    .withMessage('firstName should be max 20 characters'),
+
+  body('lastName').notEmpty().withMessage('lastName is required!'),
+  body('lastName')
+    .isLength({ min: 3 })
+    .withMessage('lastName should be atleast 3 characters'),
+  body('lastName')
+    .isLength({ max: 20 })
+    .withMessage('lastName should be max 20 characters'),
 ]
 
 export const resetPassword = [

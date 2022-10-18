@@ -235,7 +235,6 @@ export const profile = (req, res) => {
   // user token verified
   // can be access req.user
   // find user details in db
-
   models.User.findById(req.user.id, (err, docs) => {
     if (err)
       return res.status(400).json({
@@ -270,6 +269,49 @@ export const profile = (req, res) => {
       result: user,
     })
   })
+}
+
+export const updateProfile = (req, res) => {
+  // destructure all payloads from req.body
+  const { firstName, lastName, phone } = req.body
+
+  let picture
+  // check image provide on signup or not
+  const { picture: Picture } = res.locals
+
+  if (Picture.status) {
+    // image was provide and uploaded
+    // now we can access path and store it in db
+    picture = Picture.path
+  }
+  models.User.findOneAndUpdate(
+    {
+      email: req.user.email,
+    },
+    {
+      firstName,
+      lastName,
+      phone,
+      picture: picture,
+    },
+    (error, doc) => {
+      // check if there is any error while create user in the database
+      if (error) {
+        return res.status(500).json({
+          status: false,
+          message:
+            'There was an error while create your account, please try again',
+          error,
+        })
+      }
+      // user successfully create in the database
+      res.status(200).json({
+        status: true,
+        message: 'Your account has been successfully updated!',
+        result: {},
+      })
+    }
+  )
 }
 
 // reset password controller

@@ -47,6 +47,14 @@ userRouter.post(
 )
 // get user profile information
 userRouter.get('/profile', isAuthenticated, userControllers.profile)
+userRouter.put(
+  '/profile/update',
+  isAuthenticated,
+  validators.user.updateProfile,
+  validators.isRequestValidated,
+  middleware.user.uploadImage,
+  userControllers.updateProfile
+)
 
 // reset password
 userRouter.get(
