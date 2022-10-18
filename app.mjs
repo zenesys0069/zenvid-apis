@@ -88,6 +88,7 @@ app.post('/user/password/reset', (req, res) => {
 })
 
 // spinning the server
-app.listen(constants.PORT, () => {
+const listener = app.listen(constants.PORT, () => {
   console.log(`Server is running at port ${constants.PORT}`)
 })
+global.listener = listener

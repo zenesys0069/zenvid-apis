@@ -35,3 +35,19 @@ export const hardware = (req, res) => {
     },
   })
 }
+
+export const status = (req, res) => {
+  const seconds = Math.floor(process.uptime())
+
+  res.status(200).send({
+    status: true,
+    message: 'Successfully completed!',
+    result: {
+      protocol: req.protocol,
+      host: req.get('host'),
+      port: global.listener.address().port,
+      family: global.listener.address().family,
+      uptime: `${seconds}s`,
+    },
+  })
+}
