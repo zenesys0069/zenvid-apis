@@ -4,7 +4,7 @@ import * as infoControllers from '../controllers/info.controllers.mjs'
 
 // version info
 infoRouter.get('/version', infoControllers.version)
-infoRouter.get('/software', infoControllers.version)
+infoRouter.get('/software', infoControllers.software)
 infoRouter.get('/hardware', infoControllers.version)
 infoRouter.get('/status', infoControllers.version)
 
