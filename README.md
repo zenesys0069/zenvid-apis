@@ -54,7 +54,7 @@ While developing, you will probably rely mostly on `npm run dev`; however, there
 | `npm <script>` | Description                                 |
 | -------------- | ------------------------------------------- |
 | `run dev`      | Runs in Development `http://localhost:4000` |
-| `run prod`     | Run in Production                           |
+| `run prod`     | Run in Production : `http://localhost:4000` |
 
 ## Project Structure
 
