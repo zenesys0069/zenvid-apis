@@ -7,7 +7,7 @@ This project wouldn't be possible without the help of your contributions. What y
 ## Table of Contents
 
 1. [Requirements](#requirements)
-1. [Installation](#getting-started)
+1. [Installation](#Installation)
 1. [Running the Project](#running-the-project)
 1. [Project Structure](#project-structure)
 1. [Hot Reloading](#hot-reloading)
