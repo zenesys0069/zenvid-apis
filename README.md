@@ -10,7 +10,7 @@ This project wouldn't be possible without the help of your contributions. What y
 1. [Installation](#Installation)
 1. [Running the Project](#running-the-project)
 1. [Project Structure](#project-structure)
-1. [Hot Reloading](#hot-reloading)
+1. [Hot Reloading](#reloading)
 1. [API Reference](#ApiReference)
 1. [Thank You](#thank-you)
 
@@ -105,7 +105,7 @@ The project structure presented in this boilerplate is **fractal**, where functi
 ├── requests.rest                      # Rest client file
 ```
 
-### Hot Reloading
+### Reloading
 
 Hot reloading is enabled by default when the application is running in development mode (`npm run dev`). This feature is implemented with [nodemon](https://github.com/remy/nodemon) capabilities, where you code updates automatically on any changes made in file, you don't have to restart the app each time.
 
