@@ -43,15 +43,8 @@ export const upload = (req, res) => {
 }
 
 export const getVideos = (req, res) => {
-  const page = Number(req.params.page)
-  let skip = 0
-  if (page < 2) {
-    skip = 0
-  } else {
-    skip = page * 10
-  }
-  console.log()
-  models.Watch.find({}, {}, { skip: skip, limit: 10 }, (err, docs) => {
+  const page = Number(req.params.page || 0) * 10
+  models.Watch.find({}, {}, { skip: page, limit: 10 }, (err, docs) => {
     if (err)
       return res.status(400).json({
         status: false,
@@ -61,7 +54,7 @@ export const getVideos = (req, res) => {
       status: true,
       message: 'Successfully fetched',
       current_length: docs.length,
-      is_last_page: docs.length < 10,
+      is_next: docs.length === 10,
       host: `${req.protocol}://${req.get('host')}`,
       data: docs,
     })

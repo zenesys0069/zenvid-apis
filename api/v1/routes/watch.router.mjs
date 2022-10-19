@@ -12,6 +12,7 @@ const watchRouter = express.Router()
  *
  * powered by, express-validators
  */
+watchRouter.get('/videos', watchControllers.getVideos)
 
 watchRouter.get('/videos/:page', watchControllers.getVideos)
 
