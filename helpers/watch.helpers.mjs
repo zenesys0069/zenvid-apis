@@ -43,7 +43,7 @@ export const upload = (req, res, next) => {
     fstream.on('close', () => {
       req.locales = {
         ...req.locales,
-        watch: watchName,
+        watch: `${req.user.username}/${watchName}`,
       }
       next()
     })
