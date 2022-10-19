@@ -14,7 +14,7 @@ export const username = (req, res) => {
     }
     if (doc) {
       // the username is already exist
-      return res.status(200).json({
+      return res.status(400).json({
         status: false,
         message: 'Username is already taken',
       })
