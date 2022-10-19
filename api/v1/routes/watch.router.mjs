@@ -13,16 +13,7 @@ const watchRouter = express.Router()
  * powered by, express-validators
  */
 
-watchRouter.get('/', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html' })
-  res.write(
-    '<form action="/api/v1/watch/upload" method="post" enctype="multipart/form-data">'
-  )
-  res.write('<input type="file" name="fileToUpload"><br>')
-  res.write('<input type="submit">')
-  res.write('</form>')
-  return res.end()
-})
+watchRouter.get('/videos', watchControllers.getVideos)
 
 watchRouter.post(
   '/upload',

@@ -40,3 +40,18 @@ export const upload = (req, res) => {
     })
   })
 }
+
+export const getVideos = (req, res) => {
+  models.Watch.find({}, (err, docs) => {
+    if (err)
+      return res.status(400).json({
+        status: false,
+        message: 'Please try again',
+      })
+    return res.status(400).json({
+      status: true,
+      message: 'Successfully fetched',
+      data: docs,
+    })
+  })
+}
