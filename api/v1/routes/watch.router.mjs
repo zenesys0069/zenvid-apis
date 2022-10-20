@@ -1,5 +1,5 @@
 import express from 'express'
-import helpers from '../../../helpers/index.mjs'
+import middleware from '../../../middlewares/index.mjs'
 import { isAuthenticated } from '../../../utils/jwt.mjs'
 import * as watchControllers from '../controllers/watch.controllers.mjs'
 
@@ -19,7 +19,7 @@ watchRouter.get('/videos/:page', watchControllers.getVideos)
 watchRouter.post(
   '/upload',
   isAuthenticated,
-  helpers.watch.upload,
+  middleware.watch.uploadVideo,
   watchControllers.upload
 )
 
