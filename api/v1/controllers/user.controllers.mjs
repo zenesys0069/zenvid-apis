@@ -5,7 +5,6 @@ import Otp from '../../../mongodb/models/otp.model.mjs'
 import helpers from '../../../helpers/index.mjs'
 import moment from 'moment'
 import JWT from 'jsonwebtoken'
-import * as constants from '../../../constants/index.mjs'
 
 export const otp = (req, res) => {
   // get email from payload
@@ -16,11 +15,7 @@ export const otp = (req, res) => {
   Otp.findOne({ email }, (err, foundDoc) => {
     // there was an error while finding the doc
     if (err) {
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error',
-        error: err,
-      })
+      return helpers.common.errorHandler(res, null, null, err)
     }
     if (foundDoc) {
       // email found update the otp
@@ -33,28 +28,16 @@ export const otp = (req, res) => {
         (err, docs) => {
           if (err) {
             // error while updating otp
-            return res.status(400).json({
-              status: false,
-              message: 'Unable to send otp',
-              error: err,
-            })
+            helpers.common.errorHandler(res, null, null, err)
           }
           // otp updated successfully
           helpers.mail
             .sendOneTimePassword(email, 'One Time Password', otp)
             .then((mailRes) => {
-              return res.status(200).json({
-                status: true,
-                message: 'OTP resend successfully',
-                result: mailRes,
-              })
+              helpers.common.successHandler(res, null, null, mailRes)
             })
             .catch((mailError) => {
-              return res.status(400).json({
-                status: false,
-                message: 'Unable to send otp',
-                error: mailError,
-              })
+              helpers.common.errorHandler(res, null, null, mailError)
             })
         }
       )
@@ -70,27 +53,15 @@ export const otp = (req, res) => {
           helpers.mail
             .sendOneTimePassword(email, 'One Time Password', otp)
             .then((mailRes) => {
-              return res.status(200).json({
-                status: true,
-                message: 'OTP sent successfully',
-                result: mailRes,
-              })
+              return helpers.common.successHandler(res, null, null, mailRes)
             })
             .catch((mailError) => {
-              return res.status(400).json({
-                status: false,
-                message: 'Unable to send otp',
-                error: mailError,
-              })
+              return helpers.common.errorHandler(res, null, null, mailError)
             })
         })
         .catch((err) => {
           // unable to generate otp
-          res.status(400).json({
-            status: false,
-            message: 'Unable to generate otp',
-            error: err,
-          })
+          return helpers.common.errorHandler(res, null, null, err)
         })
     }
   })
@@ -105,31 +76,28 @@ export const verifyOtp = (req, res) => {
   Otp.findOne({ email }, (err, docs) => {
     if (err) {
       // an error occur while fetching data
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-      })
+      return helpers.common.errorHandler(res, null, null, err)
     }
     if (docs) {
       // an otp with this email is associated, now verify if both otp matches
       if (docs.otp == otp) {
         // one time password matched
-        res.status(200).json({
-          status: true,
-          message: 'One time password has been verified!',
-        })
+        helpers.common.successHandler(
+          res,
+          null,
+          'One time password has been verified!'
+        )
       } else {
         // incorrect one time password
-        res
-          .status(400)
-          .json({ status: false, message: 'Incorrect one time password' })
+        helpers.common.errorHandler(res, 400, 'Incorrect one time password!')
       }
     } else {
       // there is no record found or one time password has been expired.
-      res.status(400).json({
-        status: false,
-        message: 'One time password has been expired!',
-      })
+      helpers.common.errorHandler(
+        res,
+        400,
+        'One time password has been expired!'
+      )
     }
   })
 }
