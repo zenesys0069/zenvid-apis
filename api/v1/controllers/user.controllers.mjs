@@ -143,26 +143,24 @@ export const login = (req, res) => {
   // check if request email is exist in our database or not
   models.User.findOne({ email }, (error, foundUser) => {
     // check if there is any error with query
-    if (error)
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-      })
+    if (error) return helpers.common.errorHandler(res, null, null, result)
     if (!foundUser)
-      return res.status(404).json({
-        status: false,
-        message: 'There is no any account associated with this email',
-      })
+      return helpers.common.errorHandler(
+        res,
+        400,
+        'There is no any account associated with this email'
+      )
 
     // user found successfully, please check for password
     bcrypt.compare(password, foundUser.cipher).then((result) => {
       // result = true , password is correct.
       // result = false, password is incorrect
       if (!result)
-        return res.status(400).json({
-          status: false,
-          message: 'Either email or password is incorrect',
-        })
+        return helpers.common.errorHandler(
+          res,
+          400,
+          'Either email or password is incorrect'
+        )
       // generate token
       const payload = {
         id: foundUser._id,
@@ -176,17 +174,12 @@ export const login = (req, res) => {
       const token = generateToken(payload) // check if token is generated successfully
       if (token) {
         // token generated successfully
-        res.status(200).json({
-          status: true,
+        helpers.common.successHandler(res, 200, null, {
           token,
         })
       } else {
         // there was an error while generating token
-        res.status(500).json({
-          status: false,
-          message:
-            'An unknown error ocurred while logging you, please try again',
-        })
+        helpers.common.errorHandler(res)
       }
     })
   })
