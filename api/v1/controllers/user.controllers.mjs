@@ -158,7 +158,7 @@ export const register = (req, res) => {
     username,
     cipher: bcrypt.hashSync(password, 10),
     role,
-    picture: `${constants.STATIC_AVATAR}/${picture}`,
+    picture: helpers.user.getPictureFullPath(picture),
   }).save((error, result) => {
     // check if there is any error while create user in the database
     if (error) {
@@ -261,7 +261,8 @@ export const profile = (req, res) => {
       username: docs.username,
       phone: docs.phone,
       role: docs.role,
-      picture: helpers.user.getFullPath(req, docs.picture),
+      host: helpers.common.getFullHost(req),
+      picture: docs.picture,
     }
 
     res.status(200).json({
@@ -293,7 +294,7 @@ export const updateProfileDetails = (req, res) => {
       firstName,
       lastName,
       phone,
-      picture: picture,
+      picture: helpers.user.getPictureFullPath(picture),
     },
     (error, doc) => {
       // check if there is any error while create user in the database
@@ -322,7 +323,7 @@ export const updatePicture = (req, res) => {
   models.User.findOneAndUpdate(
     { email: req.user.email },
     {
-      picture: picture.path,
+      picture: helpers.user.getPictureFullPath(picture.path),
     },
     (error, result) => {
       if (error) {

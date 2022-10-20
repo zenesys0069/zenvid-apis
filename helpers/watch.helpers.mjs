@@ -22,7 +22,7 @@ export const upload = (req, res, next) => {
         filename.mimeType.split('/')[1]
       }`
     } catch (error) {
-      console.log('h')
+      console.log(error)
     }
     if (!watchName) {
       return res.status(400).json({
