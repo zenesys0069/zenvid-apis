@@ -335,7 +335,6 @@ export const updatePicture = (req, res) => {
         })
       }
       // user successfully create in the database
-      console.log(result)
       res.status(200).json({
         status: true,
         message: 'Your account has been successfully updated!',

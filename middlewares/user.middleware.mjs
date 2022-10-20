@@ -4,7 +4,6 @@ import path from 'path'
 import fse from 'fs-extra'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import { nanoid } from 'nanoid'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const uploadPath = path.join(__dirname, `../avatars/`)
@@ -17,18 +16,6 @@ export const uploadImage = async (req, res, next) => {
       message: 'profile picture not provided',
     }
     return next()
-  }
-  let pictureName = null
-  try {
-    pictureName = `${nanoid()}_ms${Date.now()}`
-  } catch (error) {
-    console.log(error)
-  }
-  if (!pictureName) {
-    return res.status(400).json({
-      state: false,
-      message: 'There was an error, please try again',
-    })
   }
 
   try {
@@ -44,7 +31,7 @@ export const uploadImage = async (req, res, next) => {
     let imageBuffer = decodedImg.data
     let type = decodedImg.type
     let extension = mime.getExtension(type)
-    let fileName = pictureName + '.' + extension
+    let fileName = req.user.username + '.' + extension
     fs.writeFileSync(uploadPath + fileName, imageBuffer, 'utf8')
     res.locals.picture = {
       status: true,
