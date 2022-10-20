@@ -190,20 +190,11 @@ export const profile = (req, res) => {
   // can be access req.user
   // find user details in db
   models.User.findById(req.user.id, (err, docs) => {
-    if (err)
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-        error: err,
-      })
+    if (err) return helpers.common.errorHandler(res, null, null, err)
 
     if (!docs) {
       // user not found
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-        result: docs,
-      })
+      return helpers.common.errorHandler(res, 404, 'User not found')
     }
     const user = {
       id: docs._id,
@@ -218,11 +209,7 @@ export const profile = (req, res) => {
       picture: docs.picture,
     }
 
-    res.status(200).json({
-      status: true,
-      message: 'Request completed successfully',
-      result: user,
-    })
+    helpers.common.successHandler(res, null, null, user)
   })
 }
 
