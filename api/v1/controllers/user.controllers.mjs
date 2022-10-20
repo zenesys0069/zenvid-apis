@@ -362,7 +362,7 @@ export const resetPassword = (req, res) => {
       })
     }
 
-    const host = helpers.user.getHostUrl(req)
+    const host = helpers.common.getFullHost(req)
     const payload = {
       id: foundUser._id,
       email: foundUser.email,

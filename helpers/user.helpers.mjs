@@ -5,5 +5,5 @@ export const generateOtp = () => {
 
 export const getPictureFullPath = (path) => {
   if (!path) return null
-  return `/${constants.STATIC_AVATAR}/${path}`
+  return `${constants.STATIC_AVATAR}/${path}`
 }
