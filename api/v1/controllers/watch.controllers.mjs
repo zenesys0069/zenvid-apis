@@ -1,5 +1,6 @@
 import models from '../../../mongodb/models/index.mjs'
 import * as constants from '../../../constants/index.mjs'
+import helpers from '../../../helpers/index.mjs'
 
 // upload watch / video controller
 export const upload = (req, res) => {
@@ -25,7 +26,7 @@ export const upload = (req, res) => {
     username: user.username,
     title,
     description,
-    watch: `${constants.STATIC_WATCH}/${watch}`,
+    watch: helpers.watch.getWatchFullPath(watch),
   }).save((err, result) => {
     if (err)
       return res.status(400).json({
@@ -55,7 +56,7 @@ export const getVideos = (req, res) => {
       message: 'Successfully fetched',
       current_length: docs.length,
       is_next: docs.length === 10,
-      host: `${req.protocol}://${req.get('host')}`,
+      host: helpers.common.getFullHost(req),
       data: docs,
     })
   })

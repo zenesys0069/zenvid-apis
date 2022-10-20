@@ -5,6 +5,7 @@ import Otp from '../../../mongodb/models/otp.model.mjs'
 import helpers from '../../../helpers/index.mjs'
 import moment from 'moment'
 import JWT from 'jsonwebtoken'
+import * as constants from '../../../constants/index.mjs'
 
 export const otp = (req, res) => {
   // get email from payload
@@ -157,7 +158,7 @@ export const register = (req, res) => {
     username,
     cipher: bcrypt.hashSync(password, 10),
     role,
-    picture: picture,
+    picture: `${constants.STATIC_AVATAR}/${picture}`,
   }).save((error, result) => {
     // check if there is any error while create user in the database
     if (error) {

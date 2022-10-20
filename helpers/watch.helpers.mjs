@@ -50,10 +50,8 @@ export const upload = (req, res, next) => {
   })
 }
 
-export const getWatchFullPath = (req, path) => {
-  const protocol = req.protocol
-  const host = req.get('host')
+export const getWatchFullPath = (path) => {
   if (!path) return null
-  const fullPath = `${protocol}://${host}${constants.STATIC_WATCH}/${path}`
+  const fullPath = `/${constants.STATIC_WATCH}/${path}`
   return fullPath
 }
