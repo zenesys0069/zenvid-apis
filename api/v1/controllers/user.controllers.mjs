@@ -238,20 +238,14 @@ export const updateProfileDetails = (req, res) => {
     },
     (error, doc) => {
       // check if there is any error while create user in the database
-      if (error) {
-        return res.status(500).json({
-          status: false,
-          message:
-            'There was an error while create your account, please try again',
-          error,
-        })
-      }
+      if (error) return helpers.common.errorHandler(res, null, null, error)
       // user successfully create in the database
-      res.status(200).json({
-        status: true,
-        message: 'Your account has been successfully updated!',
-        result: {},
-      })
+      helpers.common.successHandler(
+        res,
+        null,
+        'Your account has been successfully updated!',
+        doc
+      )
     }
   )
 }
