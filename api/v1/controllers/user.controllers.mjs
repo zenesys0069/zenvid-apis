@@ -260,20 +260,14 @@ export const updatePicture = (req, res) => {
       picture: helpers.user.getPictureFullPath(picture.path),
     },
     (error, result) => {
-      if (error) {
-        return res.status(500).json({
-          status: false,
-          message:
-            'There was an error while create your account, please try again',
-          error,
-        })
-      }
+      if (error) return helpers.common.errorHandler(res, null, null, error)
       // user successfully create in the database
-      res.status(200).json({
-        status: true,
-        message: 'Your account has been successfully updated!',
-        result: {},
-      })
+      helpers.common.successHandler(
+        res,
+        null,
+        'Your profile picture has been successfully updated!',
+        result
+      )
     }
   )
 }
