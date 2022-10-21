@@ -276,19 +276,13 @@ export const updatePicture = (req, res) => {
 export const resetPassword = (req, res) => {
   const { email } = req.params
   models.User.findOne({ email: email }, (err, foundUser) => {
-    if (err)
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-      })
-    if (!foundUser) {
-      return res.status(200).json({
-        status: true,
-        message:
-          'If you are registered with us an email address will be sent to you.',
-      })
-    }
-
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    if (!foundUser)
+      return helpers.common.successHandler(
+        res,
+        200,
+        'If you are registered with us an email address will be send to you.'
+      )
     const host = helpers.common.getFullHost(req)
     const payload = {
       id: foundUser._id,
@@ -302,19 +296,15 @@ export const resetPassword = (req, res) => {
     helpers.mail
       .sendResetPassword(email, resetLink)
       .then((emailRes) => {
-        res.status(200).json({
-          status: true,
-          message:
-            'If you are registered with us an email address will be sent to you.',
-          result: emailRes,
-        })
+        helpers.common.successHandler(
+          res,
+          null,
+          'If you are registered with us an email address will be sent to you.',
+          emailRes
+        )
       })
       .catch((emailErr) => {
-        res.status(200).json({
-          status: false,
-          message: 'There was an error please try again.',
-          result: emailErr,
-        })
+        helpers.common.errorHandler(res, null, null, emailErr)
       })
   })
 }
