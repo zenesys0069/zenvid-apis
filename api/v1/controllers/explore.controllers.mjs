@@ -5,25 +5,16 @@ export const username = (req, res) => {
   // get username from request payload
   const { username } = req.body
   models.User.findOne({ username }, (err, doc) => {
-    if (err) {
+    if (err)
       // there was an error while fetching data
-      return res.status(400).json({
-        status: false,
-        message: 'There was some error, please try again',
-      })
-    }
+      return helpers.common.errorHandler(res, null, null, err)
+
     if (doc) {
       // the username is already exist
-      return res.status(400).json({
-        status: false,
-        message: 'Username is already taken',
-      })
+      helpers.common.errorHandler(res, 400, 'Username is already taken', null)
     } else {
       // username is available to use
-      return res.status(200).json({
-        status: true,
-        message: 'Username is available!',
-      })
+      helpers.common.successHandler(res, null, 'Username is available!', null)
     }
   })
 }
@@ -33,33 +24,10 @@ export const findUser = (req, res) => {
   // get search from payload
   const { search } = req.body
   models.User.find({ $text: { $search: search } }).exec((err, docs) => {
-    if (err)
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error, please try again',
-      })
-    const users = []
-
-    try {
-      docs.map((user) => {
-        users.push({
-          id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          fullName: `${user.firstName} ${user.lastName}`,
-          email: user.email,
-          username: user.username,
-          phone: user.phone,
-          role: user.role,
-          picture: helpers.user.getFullPath(req, user.picture),
-        })
-      })
-    } catch (error) {
-      console.log(err)
-    }
-    res.status(200).json({
-      status: true,
-      data: users,
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    helpers.common.successHandler(res, null, null, {
+      host: helpers.common.getFullHost(req),
+      users: docs,
     })
   })
 }
