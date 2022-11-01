@@ -8,18 +8,10 @@ export const upload = (req, res) => {
   //req.locales.watch contains uploaded video name
   const user = req.user
   const { title, description, watch } = req.locales
-  if (!title) {
-    return res.status(400).json({
-      status: false,
-      message: 'title is missing.',
-    })
-  }
-  if (!description) {
-    return res.status(400).json({
-      status: false,
-      message: 'description is missing.',
-    })
-  }
+  if (!title) return helpers.common.errorHandler(res, 400, 'title is missing.')
+
+  if (!description)
+    return helpers.common.errorHandler(res, 400, 'description is missing.')
 
   new models.Watch({
     userId: user.id,
@@ -28,36 +20,24 @@ export const upload = (req, res) => {
     description,
     watch: helpers.watch.getWatchFullPath(watch),
   }).save((err, result) => {
-    if (err)
-      return res.status(400).json({
-        status: false,
-        message: 'There was an error while uploading, please try again',
-        result: err,
-      })
+    if (err) return helpers.common.errorHandler(res, null, null, err)
 
-    res.status(200).json({
-      status: true,
-      message: 'You video has been published',
-      result: result,
-    })
+    helpers.common.successHandler(
+      res,
+      null,
+      'You video has been published',
+      result
+    )
   })
 }
 
 export const getVideos = (req, res) => {
   const page = Number(req.params.page || 0) * 10
   models.Watch.find({}, {}, { skip: page, limit: 10 }, (err, docs) => {
-    if (err)
-      return res.status(400).json({
-        status: false,
-        message: 'Please try again',
-      })
-    return res.status(400).json({
-      status: true,
-      message: 'Successfully fetched',
-      current_length: docs.length,
-      is_next: docs.length === 10,
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    return helpers.common.successHandler(res, null, null, {
       host: helpers.common.getFullHost(req),
-      data: docs,
+      videos: docs,
     })
   })
 }
