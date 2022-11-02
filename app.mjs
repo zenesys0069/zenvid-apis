@@ -7,6 +7,7 @@ import * as constants from './constants/index.mjs'
 import JWT from 'jsonwebtoken'
 import models from './mongodb/models/index.mjs'
 import bcrypt from 'bcrypt'
+import morgan from 'morgan'
 
 // express app
 const app = express()
@@ -27,6 +28,12 @@ app.use(
 
 // ejs
 app.set('view engine', 'ejs')
+
+// logger
+app.use(
+  morgan(`:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
+`)
+)
 
 // server static files
 app.use(express.static('public'))
