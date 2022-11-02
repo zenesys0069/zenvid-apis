@@ -12,7 +12,7 @@ export const errorHandler = (res, statusCode, message, information) =>
 
 export const successHandler = (res, statusCode, message, information) =>
   res.status(statusCode || 200).json({
-    status: false,
+    status: true,
     message: message || 'Successful!',
     result: information || {},
   })
