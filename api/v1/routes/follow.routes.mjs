@@ -19,5 +19,7 @@ followRouter.post(
   validators.isRequestValidated,
   controller.stop
 )
+followRouter.get('/followers', isAuthenticated, controller.followers)
+followRouter.get('/following', isAuthenticated, controller.following)
 
 export default followRouter

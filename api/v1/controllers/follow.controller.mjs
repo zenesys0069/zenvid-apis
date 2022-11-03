@@ -26,7 +26,7 @@ export const start = (req, res) => {
             },
           ],
         },
-        (err, updateUser) => {
+        (err, _) => {
           if (err) return helpers.common.errorHandler(res, null, null, err)
           models.User.findOneAndUpdate(
             { email: req.user.email },
@@ -54,5 +54,16 @@ export const start = (req, res) => {
 export const stop = (req, res) => {
   res.status(200).json({
     message: 'Stopped following',
+  })
+}
+
+export const followers = (req, res) => {
+  res.status(200).json({
+    message: 'Followers list',
+  })
+}
+export const following = (req, res) => {
+  res.status(200).json({
+    message: 'Following list',
   })
 }
