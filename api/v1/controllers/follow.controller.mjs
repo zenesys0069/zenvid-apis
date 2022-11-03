@@ -91,12 +91,20 @@ export const stop = (req, res) => {
 }
 
 export const followers = (req, res) => {
-  res.status(200).json({
-    message: 'Followers list',
+  const { username } = req.body
+  models.User.findOne({ username }, (err, doc) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    if (!doc)
+      return helpers.common.errorHandler(res, null, 'User not found', null)
+    helpers.common.successHandler(res, null, null, doc.followers)
   })
 }
-export const following = (req, res) => {
-  res.status(200).json({
-    message: 'Following list',
+export const followings = (req, res) => {
+  const { username } = req.body
+  models.User.findOne({ username }, (err, doc) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    if (!doc)
+      return helpers.common.errorHandler(req, null, 'User not found', null)
+    helpers.common.successHandler(res, null, null, doc.followings)
   })
 }
