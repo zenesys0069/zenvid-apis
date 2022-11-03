@@ -52,8 +52,41 @@ export const start = (req, res) => {
   })
 }
 export const stop = (req, res) => {
-  res.status(200).json({
-    message: 'Stopped following',
+  const { username } = req.body
+  // get current logged in user
+  models.User.findOne({ email: req.user.email }, (err, follower) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    if (!follower)
+      return helpers.common.errorHandler(res, null, 'User not found', null)
+    // get user whom to follow
+    models.User.findOne({ username }, (err, user) => {
+      if (err) return helpers.common.errorHandler(res, null, null, err)
+      if (!user)
+        return helpers.common.errorHandler(res, null, 'User not found', err)
+      const followers = user.followers.filter((f) => f.username !== username)
+      models.User.findOneAndUpdate(
+        { username },
+        {
+          followers: followers,
+        },
+        (err, _) => {
+          if (err) return helpers.common.errorHandler(res, null, null, err)
+          const followings = follower.followings.filter(
+            (f) => f.username !== username
+          )
+          models.User.findOneAndUpdate(
+            { email: req.user.email },
+            {
+              followings: followings,
+            },
+            (err, doc) => {
+              if (err) return helpers.common.errorHandler(res, null, null, err)
+              helpers.common.successHandler(res, null, null, null)
+            }
+          )
+        }
+      )
+    })
   })
 }
 
