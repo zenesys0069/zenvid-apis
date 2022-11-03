@@ -47,7 +47,7 @@ const userSchema = new Schema({
     type: String,
   },
   followers: [],
-  following: [],
+  followings: [],
 })
 
 userSchema.index({
