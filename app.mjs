@@ -8,6 +8,7 @@ import JWT from 'jsonwebtoken'
 import models from './mongodb/models/index.mjs'
 import bcrypt from 'bcrypt'
 import morgan from 'morgan'
+import middleware from './middlewares/index.mjs'
 
 // express app
 const app = express()
@@ -34,6 +35,7 @@ app.use(
   morgan(`:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
 `)
 )
+app.use(middleware.common.logPayload)
 
 // server static files
 app.use(express.static('public'))
