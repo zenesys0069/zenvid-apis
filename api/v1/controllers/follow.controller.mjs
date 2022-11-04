@@ -91,8 +91,8 @@ export const stop = (req, res) => {
 }
 
 export const followers = (req, res) => {
-  const { username } = req.body
-  models.User.findOne({ username }, (err, doc) => {
+  const { email } = req.user
+  models.User.findOne({ email }, (err, doc) => {
     if (err) return helpers.common.errorHandler(res, null, null, err)
     if (!doc)
       return helpers.common.errorHandler(res, null, 'User not found', null)
@@ -100,8 +100,8 @@ export const followers = (req, res) => {
   })
 }
 export const followings = (req, res) => {
-  const { username } = req.body
-  models.User.findOne({ username }, (err, doc) => {
+  const { email } = req.user
+  models.User.findOne({ email }, (err, doc) => {
     if (err) return helpers.common.errorHandler(res, null, null, err)
     if (!doc)
       return helpers.common.errorHandler(res, null, 'User not found', null)
