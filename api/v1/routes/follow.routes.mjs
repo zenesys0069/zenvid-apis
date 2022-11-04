@@ -22,14 +22,12 @@ followRouter.post(
 followRouter.get(
   '/followers',
   isAuthenticated,
-  validators.follow.username,
   validators.isRequestValidated,
   controller.followers
 )
 followRouter.get(
   '/followings',
   isAuthenticated,
-  validators.follow.username,
   validators.isRequestValidated,
   controller.followings
 )
