@@ -104,7 +104,7 @@ export const followings = (req, res) => {
   models.User.findOne({ username }, (err, doc) => {
     if (err) return helpers.common.errorHandler(res, null, null, err)
     if (!doc)
-      return helpers.common.errorHandler(req, null, 'User not found', null)
+      return helpers.common.errorHandler(res, null, 'User not found', null)
     helpers.common.successHandler(res, null, null, doc.followings)
   })
 }
