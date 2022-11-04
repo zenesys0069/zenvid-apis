@@ -1,9 +1,37 @@
 import express from 'express'
-import * as followController from '../controllers/follow.controller.mjs'
+import { isAuthenticated } from '../../../utils/jwt.mjs'
+import validators from '../../../validators/index.mjs'
+import * as controller from '../controllers/follow.controller.mjs'
 
 const followRouter = express.Router()
 
-followRouter.post('/start', followController.start)
-followRouter.post('/stop', followController.stop)
+followRouter.post(
+  '/start',
+  isAuthenticated,
+  validators.follow.username,
+  validators.isRequestValidated,
+  controller.start
+)
+followRouter.post(
+  '/stop',
+  isAuthenticated,
+  validators.follow.username,
+  validators.isRequestValidated,
+  controller.stop
+)
+followRouter.get(
+  '/followers',
+  isAuthenticated,
+  validators.follow.username,
+  validators.isRequestValidated,
+  controller.followers
+)
+followRouter.get(
+  '/followings',
+  isAuthenticated,
+  validators.follow.username,
+  validators.isRequestValidated,
+  controller.followings
+)
 
 export default followRouter

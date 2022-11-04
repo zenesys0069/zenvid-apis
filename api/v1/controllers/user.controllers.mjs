@@ -207,6 +207,8 @@ export const profile = (req, res) => {
       role: docs.role,
       host: helpers.common.getFullHost(req),
       picture: docs.picture,
+      followers: docs.followers.length,
+      followings: docs.followings.length,
     }
 
     helpers.common.successHandler(res, null, null, user)
