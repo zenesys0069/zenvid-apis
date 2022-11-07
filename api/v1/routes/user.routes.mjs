@@ -72,4 +72,7 @@ userRouter.get(
   userControllers.resetPassword
 )
 
+userRouter.get('/videos', isAuthenticated, userControllers.videos)
+userRouter.get('/videos/:page', isAuthenticated, userControllers.videos)
+
 export default userRouter

@@ -310,3 +310,25 @@ export const resetPassword = (req, res) => {
       })
   })
 }
+
+// response user video
+export const videos = (req, res) => {
+  const page = Number(req.params.page || 0) * 10
+  console.log({
+    page,
+    username: req.user.username,
+  })
+  models.Watch.find(
+    { username: req.user.username },
+    {},
+    { skip: page, limit: 10 },
+    (err, docs) => {
+      if (err) return helpers.common.errorHandler(res, null, null, err)
+      console.log(docs)
+      return helpers.common.successHandler(res, null, null, {
+        host: helpers.common.getFullHost(req),
+        videos: docs,
+      })
+    }
+  )
+}
