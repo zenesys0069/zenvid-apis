@@ -30,12 +30,12 @@ app.use(
 // ejs
 app.set('view engine', 'ejs')
 
-// logger
-app.use(
-  morgan(`:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
-`)
-)
-app.use(middleware.common.logPayload)
+// // logger
+// app.use(
+//   morgan(`:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
+// `)
+// )
+// app.use(middleware.common.logPayload)
 
 // server static files
 app.use(express.static('public'))
