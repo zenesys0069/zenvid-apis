@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
-const watchSchema = new mongoose.Schema(
+export const watchSchema = new Schema(
   {
     userId: {
       type: mongoose.Types.ObjectId,
@@ -24,10 +24,6 @@ const watchSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    comments: {
-      type: Array,
-      default: [],
-    },
     watch: {
       type: String,
       required: true,
@@ -38,4 +34,34 @@ const watchSchema = new mongoose.Schema(
   }
 )
 
-export default watchSchema
+export const commentsSchema = new Schema({
+  videoID: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+  },
+  comments: [
+    {
+      fullName: {
+        type: String,
+        required: true,
+      },
+      username: {
+        type: String,
+        required: true,
+      },
+      picture: {
+        type: String,
+        required: true,
+      },
+      text: {
+        type: String,
+        required: true,
+        trim: true,
+        min: 1,
+        max: 512,
+      },
+    },
+  ],
+})
