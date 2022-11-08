@@ -2,6 +2,7 @@ import express from 'express'
 import middleware from '../../../middlewares/index.mjs'
 import { isAuthenticated } from '../../../utils/jwt.mjs'
 import * as watchControllers from '../controllers/watch.controllers.mjs'
+import validators from '../../../validators/index.mjs'
 
 // user routes reference
 const watchRouter = express.Router()
@@ -12,15 +13,21 @@ const watchRouter = express.Router()
  *
  * powered by, express-validators
  */
-watchRouter.get('/videos', watchControllers.getVideos)
-
-watchRouter.get('/videos/:page', watchControllers.getVideos)
-
 watchRouter.post(
   '/upload',
   isAuthenticated,
   middleware.watch.uploadVideo,
   watchControllers.upload
+)
+watchRouter.get('/videos', watchControllers.getVideos)
+
+watchRouter.get('/videos/:page', watchControllers.getVideos)
+watchRouter.post(
+  '/video/like',
+  isAuthenticated,
+  validators.explore.like,
+  validators.isRequestValidated,
+  watchControllers.like
 )
 
 export default watchRouter

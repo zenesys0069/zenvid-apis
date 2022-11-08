@@ -41,3 +41,19 @@ export const getVideos = (req, res) => {
     })
   })
 }
+
+export const like = (req, res) => {
+  const { video_id } = req.body
+  models.Watch.findById(video_id, (err, video) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    console.log('video', video)
+    console.log(video)
+    if (!video)
+      return helpers.common.errorHandler(res, 'Video not found', 404, null)
+    video.likes = video.likes + 1
+    video.save((err, doc) => {
+      if (err) return helpers.common.errorHandler(res, null, null, err)
+      helpers.common.successHandler(res, null, null, doc)
+    })
+  })
+}

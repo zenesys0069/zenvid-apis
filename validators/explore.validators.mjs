@@ -16,3 +16,8 @@ export const findUser = [
   body('search').notEmpty().withMessage('Search is required'),
   body('search').isString().withMessage('Search should be string'),
 ]
+
+export const like = [
+  body('video_id').notEmpty().withMessage('video_id is required!'),
+  body('video_id').isString().withMessage('video_id should be string'),
+]
