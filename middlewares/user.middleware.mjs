@@ -29,9 +29,7 @@ export const uploadImage = async (req, res, next) => {
     response.data = new Buffer(matches[2], 'base64')
     let decodedImg = response
     let imageBuffer = decodedImg.data
-    let type = decodedImg.type
-    let extension = mime.getExtension(type)
-    let fileName = req.user.username + '.' + extension
+    let fileName = req.user.username + '.jpeg'
     fs.writeFileSync(uploadPath + fileName, imageBuffer, 'utf8')
     res.locals.picture = {
       status: true,
