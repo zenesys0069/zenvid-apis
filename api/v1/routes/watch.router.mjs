@@ -30,4 +30,19 @@ watchRouter.post(
   watchControllers.like
 )
 
+watchRouter.post(
+  '/video/comment/',
+  isAuthenticated,
+  validators.explore.postComment,
+  validators.isRequestValidated,
+  watchControllers.postComment
+)
+watchRouter.get(
+  '/video/comments',
+  isAuthenticated,
+  validators.explore.getComment,
+  validators.isRequestValidated,
+  watchControllers.getComment
+)
+
 export default watchRouter

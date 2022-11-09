@@ -38,30 +38,24 @@ export const commentsSchema = new Schema({
   videoID: {
     type: String,
     required: true,
-    trim: true,
-    unique: true,
   },
-  comments: [
-    {
-      fullName: {
-        type: String,
-        required: true,
-      },
-      username: {
-        type: String,
-        required: true,
-      },
-      picture: {
-        type: String,
-        required: true,
-      },
-      text: {
-        type: String,
-        required: true,
-        trim: true,
-        min: 1,
-        max: 512,
-      },
-    },
-  ],
+  comment: {
+    type: String,
+    required: true,
+    trim: true,
+    min: 1,
+    max: 512,
+  },
+
+  fullName: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  picture: {
+    type: String,
+  },
 })
