@@ -57,3 +57,42 @@ export const like = (req, res) => {
     })
   })
 }
+
+export const postComment = (req, res) => {
+  const { video_id, comment } = req.body
+  models.Watch.findOne({ _id: video_id }, (err, video) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    if (!video)
+      return helpers.common.errorHandler(res, null, 'Video not found!', null)
+    models.User.findOne({ _id: req.user.id }, (err, user) => {
+      if (err) return helpers.common.errorHandler(res, null, null, err)
+      if (!user)
+        return helpers.common.errorHandler(res, 404, 'User not found', user)
+      console.log({
+        videoID: video_id,
+        comment: comment,
+        fullName: `${req.user.firstName} ${req.user.lastName}`,
+        username: req.user.username,
+        picture: user.picture,
+      })
+      new models.Comment({
+        videoID: video_id,
+        comment: comment,
+        fullName: `${req.user.firstName} ${req.user.lastName}`,
+        username: req.user.username,
+        picture: user.picture,
+      }).save((err, result) => {
+        if (err) return helpers.common.errorHandler(res, null, null, err)
+        helpers.common.successHandler(res, null, null, result)
+      })
+    })
+  })
+}
+
+export const getComment = (req, res) => {
+  const { video_id } = req.body
+  models.Comment.find({ videoID: video_id }, (err, docs) => {
+    if (err) return helpers.common.errorHandler(res, null, null, err)
+    helpers.common.successHandler(res, null, null, docs)
+  })
+}
