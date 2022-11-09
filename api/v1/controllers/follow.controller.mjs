@@ -18,9 +18,8 @@ export const start = (req, res) => {
 
       // check user is already following
       const isFollow = user.followers.find(
-        (follower) => follower.username === req.user.username
+        (f) => f.username === req.user.username
       )
-
       if (!isFollow) {
         models.User.findOneAndUpdate(
           { username },
