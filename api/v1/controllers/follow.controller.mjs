@@ -17,9 +17,10 @@ export const start = (req, res) => {
         return helpers.common.errorHandler(res, null, 'User not found', err)
 
       // check user is already following
-      const isFollow = user.followers.find(
-        (f) => f.username === req.user.username
+      const isFollow = follower.followings.find(
+        (f) => f.username === user.username
       )
+      console.log('follows', isFollow)
       if (!isFollow) {
         models.User.findOneAndUpdate(
           { username },
@@ -52,7 +53,12 @@ export const start = (req, res) => {
               (err, doc) => {
                 if (err)
                   return helpers.common.errorHandler(res, null, null, err)
-                helpers.common.successHandler(res, null, null, null)
+                helpers.common.successHandler(
+                  res,
+                  null,
+                  'Started following',
+                  null
+                )
               }
             )
           }
@@ -98,7 +104,12 @@ export const stop = (req, res) => {
             },
             (err, doc) => {
               if (err) return helpers.common.errorHandler(res, null, null, err)
-              helpers.common.successHandler(res, null, null, null)
+              helpers.common.successHandler(
+                res,
+                null,
+                'Successfully stop following',
+                null
+              )
             }
           )
         }
