@@ -104,8 +104,16 @@ export const verifyOtp = (req, res) => {
 
 export const register = (req, res) => {
   // destructure all payloads from req.body
-  const { firstName, lastName, phone, email, username, password, role } =
-    req.body
+  const {
+    firstName,
+    lastName,
+    phone,
+    description,
+    email,
+    username,
+    password,
+    role,
+  } = req.body
 
   let picture
   // check image provide on signup or not
@@ -122,6 +130,7 @@ export const register = (req, res) => {
     firstName,
     lastName,
     phone,
+    description,
     email,
     username,
     cipher: bcrypt.hashSync(password, 10),
@@ -204,6 +213,7 @@ export const profile = (req, res) => {
       email: docs.email,
       username: docs.username,
       phone: docs.phone,
+      description: docs.description,
       role: docs.role,
       host: helpers.common.getFullHost(req),
       picture: docs.picture,
@@ -217,7 +227,7 @@ export const profile = (req, res) => {
 
 export const updateProfileDetails = (req, res) => {
   // destructure all payloads from req.body
-  const { firstName, lastName, phone } = req.body
+  const { firstName, lastName, phone, description } = req.body
 
   let picture
   // check image provide on signup or not
@@ -236,6 +246,7 @@ export const updateProfileDetails = (req, res) => {
       firstName,
       lastName,
       phone,
+      description,
       picture: helpers.user.getPictureFullPath(picture),
     },
     (error, doc) => {

@@ -3,6 +3,8 @@ import helpers from '../../../helpers/index.mjs'
 
 export const start = (req, res) => {
   const { username } = req.body
+  if (username === req.user.username)
+    return helpers.common.errorHandler(res, 400, 'You cannot follow self', null)
   // get current logged in user
   models.User.findOne({ email: req.user.email }, (err, follower) => {
     if (err) return helpers.common.errorHandler(res, null, null, err)
@@ -13,41 +15,62 @@ export const start = (req, res) => {
       if (err) return helpers.common.errorHandler(res, null, null, err)
       if (!user)
         return helpers.common.errorHandler(res, null, 'User not found', err)
-      models.User.findOneAndUpdate(
-        { username },
-        {
-          followers: [
-            ...user.followers,
-            {
-              firstName: follower.firstName,
-              lastName: follower.lastName,
-              username: follower.username,
-              picture: follower.picture,
-            },
-          ],
-        },
-        (err, _) => {
-          if (err) return helpers.common.errorHandler(res, null, null, err)
-          models.User.findOneAndUpdate(
-            { email: req.user.email },
-            {
-              followings: [
-                ...follower.followings,
-                {
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  username: user.username,
-                  picture: user.picture,
-                },
-              ],
-            },
-            (err, doc) => {
-              if (err) return helpers.common.errorHandler(res, null, null, err)
-              helpers.common.successHandler(res, null, null, null)
-            }
-          )
-        }
+
+      // check user is already following
+      const isFollow = follower.followings.find(
+        (f) => f.username === user.username
       )
+      console.log('follows', isFollow)
+      if (!isFollow) {
+        models.User.findOneAndUpdate(
+          { username },
+          {
+            followers: [
+              ...user.followers,
+              {
+                firstName: follower.firstName,
+                lastName: follower.lastName,
+                username: follower.username,
+                picture: follower.picture,
+              },
+            ],
+          },
+          (err, _) => {
+            if (err) return helpers.common.errorHandler(res, null, null, err)
+            models.User.findOneAndUpdate(
+              { email: req.user.email },
+              {
+                followings: [
+                  ...follower.followings,
+                  {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username,
+                    picture: user.picture,
+                  },
+                ],
+              },
+              (err, doc) => {
+                if (err)
+                  return helpers.common.errorHandler(res, null, null, err)
+                helpers.common.successHandler(
+                  res,
+                  null,
+                  'Started following',
+                  null
+                )
+              }
+            )
+          }
+        )
+      } else {
+        helpers.common.errorHandler(
+          res,
+          400,
+          'You already following this user',
+          null
+        )
+      }
     })
   })
 }
@@ -81,7 +104,12 @@ export const stop = (req, res) => {
             },
             (err, doc) => {
               if (err) return helpers.common.errorHandler(res, null, null, err)
-              helpers.common.successHandler(res, null, null, null)
+              helpers.common.successHandler(
+                res,
+                null,
+                'Successfully stop following',
+                null
+              )
             }
           )
         }

@@ -34,6 +34,11 @@ const userSchema = new Schema({
     min: 10,
     max: 10,
   },
+  description: {
+    type: String,
+    max: 256,
+    trim: true,
+  },
   cipher: {
     type: String,
     required: true,
