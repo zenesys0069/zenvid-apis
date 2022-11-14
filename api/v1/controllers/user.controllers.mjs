@@ -233,22 +233,24 @@ export const updateProfileDetails = (req, res) => {
   // check image provide on signup or not
   const { picture: Picture } = res.locals
 
+  const updateDetails = {
+    firstName,
+    lastName,
+    phone,
+    description,
+  }
   if (Picture.status) {
     // image was provide and uploaded
     // now we can access path and store it in db
     picture = Picture.path
+    updateDetails.picture = helpers.user.getPictureFullPath(picture)
   }
+
   models.User.findOneAndUpdate(
     {
       email: req.user.email,
     },
-    {
-      firstName,
-      lastName,
-      phone,
-      description,
-      picture: helpers.user.getPictureFullPath(picture),
-    },
+    updateDetails,
     (error, doc) => {
       // check if there is any error while create user in the database
       if (error) return helpers.common.errorHandler(res, null, null, error)
