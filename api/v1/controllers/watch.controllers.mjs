@@ -46,14 +46,46 @@ export const like = (req, res) => {
   const { video_id } = req.body
   models.Watch.findById(video_id, (err, video) => {
     if (err) return helpers.common.errorHandler(res, null, null, err)
-    console.log('video', video)
-    console.log(video)
     if (!video)
       return helpers.common.errorHandler(res, 'Video not found', 404, null)
-    video.likes = video.likes + 1
-    video.save((err, doc) => {
+    // 1 check if user already liked this video
+    // 2 if liked do unlike
+    // 3 if not liked like this video
+
+    // 1.
+    models.User.findOne({ email: req.user.email }, (err, user) => {
       if (err) return helpers.common.errorHandler(res, null, null, err)
-      helpers.common.successHandler(res, null, null, doc)
+      if (!user)
+        return helpers.common.errorHandler(res, 'user not found', 404, null)
+      const isExist = user.liked.find((v) => {
+        const userVideoID = v._id.toString()
+        const videID = video._id.toString()
+        return userVideoID === videID
+      })
+      if (isExist) {
+        // user already liked this video
+        // take unlike action
+        const filteredVideo = user.liked.filter((v) => {
+          const userVideoID = v._id.toString()
+          const videoID = video._id.toString()
+          return userVideoID !== videoID
+        })
+        console.log('to save back', filteredVideo)
+        user.liked = filteredVideo
+        user.save((err, savedDoc) => {
+          if (err) return helpers.common.errorHandler(res, null, null, err)
+          helpers.common.successHandler(res, null, null, savedDoc)
+        })
+      } else {
+        // user is not liked  this video yet
+        // take further action to like this video
+        user.liked = [video, ...user.liked]
+        user.save((err, savedDoc) => {
+          console.log('while saving')
+          if (err) return helpers.common.errorHandler(res, null, null, err)
+          helpers.common.successHandler(res, null, null, savedDoc)
+        })
+      }
     })
   })
 }

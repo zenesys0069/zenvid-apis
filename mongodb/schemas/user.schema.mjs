@@ -51,6 +51,7 @@ const userSchema = new Schema({
   picture: {
     type: String,
   },
+  liked: [],
   followers: [],
   followings: [],
 })

@@ -219,6 +219,7 @@ export const profile = (req, res) => {
       picture: docs.picture,
       followers: docs.followers.length,
       followings: docs.followings.length,
+      liked: docs.liked,
     }
 
     helpers.common.successHandler(res, null, null, user)
