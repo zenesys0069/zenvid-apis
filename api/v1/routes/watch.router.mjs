@@ -37,7 +37,7 @@ watchRouter.post(
   validators.isRequestValidated,
   watchControllers.postComment
 )
-watchRouter.get(
+watchRouter.post(
   '/video/comments',
   isAuthenticated,
   validators.explore.getComment,
