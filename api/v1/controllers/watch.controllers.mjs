@@ -70,18 +70,21 @@ export const like = (req, res) => {
           const videoID = video._id.toString()
           return userVideoID !== videoID
         })
-        console.log('to save back', filteredVideo)
+
         user.liked = filteredVideo
         user.save((err, savedDoc) => {
           if (err) return helpers.common.errorHandler(res, null, null, err)
-          helpers.common.successHandler(res, null, null, savedDoc)
+          video.likes = video.likes - 1
+          video.save((err, unlikeDoc) => {
+            if (err) return helpers.common.errorHandler(res, null, null, err)
+            helpers.common.successHandler(res, null, null, unlikeDoc)
+          })
         })
       } else {
         // user is not liked  this video yet
         // take further action to like this video
         user.liked = [video, ...user.liked]
         user.save((err, savedDoc) => {
-          console.log('while saving')
           if (err) return helpers.common.errorHandler(res, null, null, err)
           video.likes = video.likes + 1
           video.save((err, likeDoc) => {
