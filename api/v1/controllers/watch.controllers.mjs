@@ -83,7 +83,11 @@ export const like = (req, res) => {
         user.save((err, savedDoc) => {
           console.log('while saving')
           if (err) return helpers.common.errorHandler(res, null, null, err)
-          helpers.common.successHandler(res, null, null, savedDoc)
+          video.likes = video.likes + 1
+          video.save((err, likeDoc) => {
+            if (err) return helpers.common.errorHandler(res, null, null, err)
+            helpers.common.successHandler(res, null, null, likeDoc)
+          })
         })
       }
     })
