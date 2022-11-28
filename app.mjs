@@ -9,9 +9,39 @@ import models from './mongodb/models/index.mjs'
 import bcrypt from 'bcrypt'
 import morgan from 'morgan'
 import middleware from './middlewares/index.mjs'
+import swaggerUi from 'swagger-ui-express'
+import swaggerJSDocs from 'swagger-jsdoc'
 
 // express app
 const app = express()
+
+// add the swaggerDefinition and create the doc
+const options = {
+  swaggerDefinition: {
+    openApi: '3.0.0',
+    info: {
+      title: 'ZenVid api backend',
+      version: 'v1',
+    },
+    servers: [
+      {
+        url: 'http://localhost:4000',
+      },
+    ],
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'Authorization',
+        scheme: 'bearer',
+        in: 'header',
+      },
+    },
+  },
+  apis: ['./app.mjs', './api/v1/routes/*.mjs'],
+}
+
+const swaggerSpec = swaggerJSDocs(options)
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // middleware
 app.use(cors())
@@ -58,6 +88,16 @@ mongodbInit()
   )
 
 // root route
+/**
+ * @swagger
+ * /:
+ *  get:
+ *      description: Check the server is running or not !!
+ *      responses:
+ *           200:
+ *             description: Server is up and running, Cheers!
+ *
+ */
 app.get('/', (req, res) => {
   res.status(200).json({
     message: 'Server is up and running, Cheers!',
